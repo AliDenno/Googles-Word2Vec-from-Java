@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     for (a = 0; a < size; a++) M[a + b * size] /= len;
   }
   fclose(f);
-  while (1) {
+  //while (1) {
     for (a = 0; a < N; a++) bestd[a] = 0;
     for (a = 0; a < N; a++) bestw[a][0] = 0;
     printf("Enter word or sentence (EXIT to break): ");
@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
       }
       a++;
     }
-    if (!strcmp(st1, "EXIT")) break;
+    //if (!strcmp(st1, "EXIT")) break;
     cn = 0;
     b = 0;
     c = 0;
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
         break;
       }
     }
-    if (b == -1) continue;
+    //if (b == -1) continue;
     printf("\n                                              Word       Cosine distance\n------------------------------------------------------------------------\n");
     for (a = 0; a < size; a++) vec[a] = 0;
     for (b = 0; b < cn; b++) {
@@ -131,6 +131,6 @@ int main(int argc, char **argv) {
       }
     }
     for (a = 0; a < N; a++) printf("%50s\t\t%f\n", bestw[a], bestd[a]);
-  }
+  //}
   return 0;
 }
