@@ -1,4 +1,6 @@
-  class word2vec{
+ package word2vec;
+
+ class word2vec{
     public static void main(String[] args){
       System.out.println("Hello word2vec!");
     }
