@@ -11,36 +11,51 @@
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-
+#include <jni.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include <stdlib.h> // mac os x
-
-
+#include <stdlib.h>
 const long long max_size = 2000;         // max length of strings
 const long long N = 40;                  // number of closest words that will be shown
 const long long max_w = 50;              // max length of vocabulary entries
 
-int main(int argc, char **argv) {
-  FILE *f;
-  char st1[max_size];
-  char bestw[N][max_size];
-  char file_name[max_size], st[100][max_size];
-  float dist, len, bestd[N], vec[max_size];
-  long long words, size, a, b, c, d, cn, bi[100];
-  char ch;
-  float *M;
-  char *vocab;
-  if (argc < 2) {
-    printf("Usage: ./distance <FILE>\nwhere FILE contains word projections in the BINARY FORMAT\n");
-    return 0;
-  }
-  strcpy(file_name, argv[1]);
+JNIEXPORT void JNICALL Java_HelloWorld_helloFromC
+  (JNIEnv * env, jobject jobj, jstring javaStringlink,jstring javaStringexpression)
+{
+    //char st1[200];
+    //char st2[200];
+    //strcpy(st1,javaString);
+
+    //printf("%s", st1);
+    //printf("%s", st2);
+
+    FILE *f;
+    char st1[max_size];
+    char bestw[N][max_size];
+    char file_name[max_size], st[100][max_size];
+    float dist, len, bestd[N], vec[max_size];
+    long long words, size, a, b, c, d, cn, bi[100];
+    char ch;
+    float *M;
+    char *vocab;
+
+    const char *nativeStringlink = (*env)->GetStringUTFChars(env, javaStringlink, 0);
+    const char *nativeStringexpression = (*env)->GetStringUTFChars(env, javaStringexpression, 0);
+	//st1=nativeString;
+    strcpy(st1,nativeStringlink);
+  //  strcpy(st2,nativeStringexpression);
+
+
+
+
+
+
+    strcpy(file_name, nativeStringlink);
   f = fopen(file_name, "rb");
   if (f == NULL) {
     printf("Input file not found\n");
-    return -1;
+    //return -1;
   }
   fscanf(f, "%lld", &words);
   fscanf(f, "%lld", &size);
@@ -48,7 +63,7 @@ int main(int argc, char **argv) {
   M = (float *)malloc((long long)words * (long long)size * sizeof(float));
   if (M == NULL) {
     printf("Cannot allocate memory: %lld MB    %lld  %lld\n", (long long)words * size * sizeof(float) / 1048576, words, size);
-    return -1;
+    //return -1;
   }
   for (b = 0; b < words; b++) {
     fscanf(f, "%s%c", &vocab[b * max_w], &ch);
@@ -59,11 +74,12 @@ int main(int argc, char **argv) {
     for (a = 0; a < size; a++) M[a + b * size] /= len;
   }
   fclose(f);
-  //while (1) {
+
     for (a = 0; a < N; a++) bestd[a] = 0;
     for (a = 0; a < N; a++) bestw[a][0] = 0;
     printf("Enter word or sentence (EXIT to break): ");
     a = 0;
+    /*
     while (1) {
       st1[a] = fgetc(stdin);
       if ((st1[a] == '\n') || (a >= max_size - 1)) {
@@ -71,8 +87,10 @@ int main(int argc, char **argv) {
         break;
       }
       a++;
-    }
-    //if (!strcmp(st1, "EXIT")) break;
+    }*/
+    strcpy(st1,nativeStringexpression);
+
+  //  if (!strcmp(st1, "EXIT")) break;
     cn = 0;
     b = 0;
     c = 0;
@@ -131,6 +149,6 @@ int main(int argc, char **argv) {
       }
     }
     for (a = 0; a < N; a++) printf("%50s\t\t%f\n", bestw[a], bestd[a]);
-  //}
-  return 0;
+
+//return 0;
 }
