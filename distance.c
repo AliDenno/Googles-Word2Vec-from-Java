@@ -20,7 +20,7 @@ const long long max_size = 2000;         // max length of strings
 const long long N = 40;                  // number of closest words that will be shown
 const long long max_w = 50;              // max length of vocabulary entries
 
-JNIEXPORT void JNICALL Java_HelloWorld_helloFromC
+JNIEXPORT void JNICALL Java_Word2Vec_word2vecFromC
   (JNIEnv * env, jobject jobj, jstring javaStringlink,jstring javaStringexpression)
 {
     //char st1[200];
